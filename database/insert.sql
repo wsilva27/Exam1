@@ -1,7 +1,8 @@
-USE CIS485;
+CREATE DATABASE EXAM_1;
+USE EXAM_1;
 CREATE TABLE Customers (
-	CustomerID INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    CustomerName VARCHAR(200), 
+	CustomerID INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    CustomerName VARCHAR(200),
     ContactName VARCHAR(200),
     Address VARCHAR(200),
     City VARCHAR(200),
@@ -103,8 +104,8 @@ insert into Customers (CustomerID, CustomerName, ContactName,Address,City,Postal
 
 
 CREATE TABLE Categories (
-	CategoryID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    CategoryName VARCHAR(200) NOT NULL, 
+	CategoryID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    CategoryName VARCHAR(200) NOT NULL,
     Description VARCHAR(200) NOT NULL
 );
 
@@ -119,11 +120,11 @@ insert into Categories (CategoryID, CategoryName, Description) values (8, 'Seafo
 
 
 CREATE TABLE Employees (
-	EmployeeID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    LastName VARCHAR(200) NOT NULL, 
-    FirstName VARCHAR(200) NOT NULL, 
-    BirthDate DATE NOT NULL, 
-    Photo VARCHAR(200) NOT NULL, 
+	EmployeeID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    LastName VARCHAR(200) NOT NULL,
+    FirstName VARCHAR(200) NOT NULL,
+    BirthDate DATE NOT NULL,
+    Photo VARCHAR(200) NOT NULL,
     Notes VARCHAR(2000) NOT NULL
 );
 
@@ -141,9 +142,9 @@ insert into Employees (EmployeeID, LastName, FirstName, BirthDate, Photo, Notes)
 
 
 CREATE TABLE OrderDetails (
-	OrderDetailID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    OrderID INT(6) UNSIGNED NOT NULL, 
-    ProductID INT(6) UNSIGNED NOT NULL, 
+	OrderDetailID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT(6) UNSIGNED NOT NULL,
+    ProductID INT(6) UNSIGNED NOT NULL,
     Quantity INT(6) UNSIGNED NOT NULL
 );
 
@@ -670,12 +671,12 @@ insert into OrderDetails (OrderDetailID, OrderID, ProductID, Quantity) values (5
 
 
 CREATE TABLE Orders (
-	OrderID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    CustomerID INT(6) UNSIGNED NOT NULL, 
+	OrderID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT(6) UNSIGNED NOT NULL,
     EmployeeID INT(6) UNSIGNED NOT NULL,
-    OrderDate DATE NOT NULL, 
-    ShipperID INT(6) UNSIGNED NOT NULL 
-); 
+    OrderDate DATE NOT NULL,
+    ShipperID INT(6) UNSIGNED NOT NULL
+);
 
 
 insert into Orders (OrderID, CustomerID, EmployeeID, OrderDate, ShipperID) values (10248, 90, 5, '1996-07-04', 3);
@@ -879,7 +880,7 @@ insert into Orders (OrderID, CustomerID, EmployeeID, OrderDate, ShipperID) value
 
 
 CREATE TABLE Products (
-	ProductID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	ProductID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     ProductName VARCHAR(200) NOT NULL,
     SupplierID INT(6) UNSIGNED NOT NULL,
     CategoryID INT(6) UNSIGNED NOT NULL,
@@ -970,7 +971,7 @@ insert into Products (ProductID, ProductName, SupplierID, CategoryID, Unit, Pric
 
 
 CREATE TABLE Shippers (
-	ShipperID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	ShipperID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     ShipperName VARCHAR(200) NOT NULL,
     Phone VARCHAR(20) NOT NULL
 );
@@ -983,7 +984,7 @@ insert into Shippers (ShipperID, ShipperName, Phone) values (3, 'Federal Shippin
 
 
 CREATE TABLE Suppliers (
-	SupplierID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	SupplierID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     SupplierName VARCHAR(200) NOT NULL,
     ContactName VARCHAR(200) NOT NULL,
     Address VARCHAR(200) NOT NULL,
@@ -991,7 +992,7 @@ CREATE TABLE Suppliers (
     PostalCode VARCHAR(20) NOT NULL,
     Country VARCHAR(50) NOT NULL,
     Phone VARCHAR(20) NOT NULL
-); 
+);
 
 
 insert into Suppliers (SupplierID, SupplierName, ContactName,Address,City,PostalCode,Country, Phone) values (1, 'Exotic Liquid', 'Charlotte Cooper', '49 Gilbert St.', 'Londona', 'EC1 4SD', 'UK', '(171) 555-2222');
@@ -1023,4 +1024,3 @@ insert into Suppliers (SupplierID, SupplierName, ContactName,Address,City,Postal
 insert into Suppliers (SupplierID, SupplierName, ContactName,Address,City,PostalCode,Country, Phone) values (27, 'Escargots Nouveaux', 'Marie Delamare', '22, rue H. Voiron', 'Montceau', '71300', 'France', '85.57.00.07');
 insert into Suppliers (SupplierID, SupplierName, ContactName,Address,City,PostalCode,Country, Phone) values (28, 'Gai pâturage', 'Eliane Noz', 'Bat. B 3, rue des Alpes', 'Annecy', '74000', 'France', '38.76.98.06');
 insert into Suppliers (SupplierID, SupplierName, ContactName,Address,City,PostalCode,Country, Phone) values (29, 'Forêts d''érables', 'Chantal Goulet', '148 rue Chasseur', 'Ste-Hyacinthe', 'J2S 7S8', 'Canada', '(514) 555-2955');
-
