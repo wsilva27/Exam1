@@ -22,7 +22,7 @@
             <?php
             $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
-            include '../database/database_connection.php';
+            include 'confi/database.php';
 
             try {
                 $query = "SELECT id, name, description, bond FROM inmate WHERE id = ? LIMIT 0,1";

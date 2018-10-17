@@ -26,7 +26,7 @@
             </div>
 
             <?php
-            include '../database/database_connection.php';
+            include 'confi/database.php';
 
             $action = isset($_GET['action']) ? $_GET['action'] : "";
 
@@ -65,7 +65,7 @@
                     extract($row);
 
                     echo "<tr>";
-                    echo "<td>{$count}</td>";
+                    echo "<td>{$id}</td>";
                     echo "<td>{$name}</td>";
                     echo "<td>{$description}</td>";
                     echo "<td>&#36;{$bond}</td>";
@@ -80,7 +80,7 @@
                 echo "</table>";
             } else {
                 echo "<div class='alert alert-danger'>No records found.</div>";
-            }*/
+            }
             ?>
         </div>
 

@@ -20,11 +20,10 @@
             <?php
             //$id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
-            include '../database/database_connection.php';
+            include 'confi/database.php';
 
             try {
-                //$query = "SELECT id, name, description, bond FROM inmate WHERE id = ? LIMIT 0,1";
-                $query = "SELECT COUNT(*) FROM CUSTOMERS WHERE COUNTRY = 'MEXICO'";
+                $query = "SELECT id, name, description, bond FROM inmate WHERE id = 1 LIMIT 0,1";
                 $stmt = $con->prepare($query);
 
                 $stmt->bindParam(1, $id);
@@ -33,7 +32,7 @@
 
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                $name = $row['Count'];
+                $name = $row['name'];
                 $description = $row['description'];
                 $bond = $row['bond'];
             } catch (PDOException $exception) {
@@ -42,7 +41,7 @@
             ?>
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Count</td>
+                    <td>Name</td>
                     <td><?php echo htmlspecialchars($name, ENT_QUOTES); ?></td>
                 </tr>
                 <tr>

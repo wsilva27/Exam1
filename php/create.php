@@ -21,7 +21,7 @@
             <?php
             if ($_POST) {
 
-                include 'database/database_connection.php';
+                include '../database/database_connection.php';
 
                 try {
 

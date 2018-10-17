@@ -1,6 +1,6 @@
 <?php
 
-include '../database/database_connection.php';
+include 'confi/database.php';
 
 try {
 
