@@ -1,7 +1,7 @@
-<?php                                                                      
-    session_start();                                                           
-    include "conn_inc.php";                                                    
-    include("movie.php");  
+<?php
+    if(!isset($_SESSION))
+        session_start();
+    include "conn_inc.php";
     // Welbert Marques Silva
     // Web Programming - PHP                                                   
     // Fall 2018                                                               
