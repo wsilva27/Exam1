@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    if(!isset($_SESSION))
+        session_start();
     ob_start();
     //connect to the database
     include "conn_inc.php";
