@@ -1,4 +1,7 @@
 <?php
+    if(!isset($_SESSION))
+        session_start();
+
     include "conn_inc.php";
     // Welbert Marques Silva
     // Web Programming II - PHP
@@ -7,32 +10,33 @@
     // Get information from Order
     $usertxt = $_SESSION['user_logged'] ? $_SESSION['user_logged'] : "Guest";
     echo $_SESSION['user_logged'] ? "" : "<p style='color:red;'>User browser does not support session</p>";
-    $product1 = $_POST['productid1'];
-    $product2 = $_POST['productid2'];
-    $product3 = $_POST['productid3'];
-    $q1 = $_POST['quantity1'] ? $_POST['quantity1'] : 0;
-    $q2 = $_POST['quantity2'] ? $_POST['quantity2'] : 0;
-    $q3 = $_POST['quantity3'] ? $_POST['quantity3'] : 0;
-    // Insert new order in the ordertbl:
-    $query = "INSERT INTO ordertbl (
-              username,
-              qty1,
-              qty2,
-              qty3)
-              VALUES ('$usertxt',$q1,$q2,$q3);";
-    $message1 = "Items added to Order table.";
-    $results = mysqli_query($con, $query) or die(mysqli_error($con));
-    // Update the inventory:
-    $query = "UPDATE inventory SET QtyOnHand = ";
-    $query .= "(QtyOnHand - $q1) WHERE prodid = '$product1'";
-    $results = mysqli_query($con, $query) or die(mysqli_error($con));
-    $query = "UPDATE inventory SET QtyOnHand = ";
-    $query .= "(QtyOnHand - $q2) WHERE prodid = '$product2'";
-    $results = mysqli_query($con, $query) or die(mysqli_error($con));
-    $query = "UPDATE inventory SET QtyOnHand = ";
-    $query .= "(QtyOnHand - $q3) WHERE prodid = '$product3'";
-    $results = mysqli_query($con, $query) or die(mysqli_error($con));
-    $message2 = "Inventory Quantities Updated.";
+    
+    $productid = $_POST["productid"];
+    $price = $_POST["price"];
+    $quantity = $_POST["quantity"];
+
+    $totalqty = 0;
+    for($i = 0; $i < count($productid); $i++){
+        $totalqty += $quantity[$i];
+    }
+
+    if($totalqty > 0){
+        $query = "INSERT INTO orders (username, orderdate)
+                  VALUES ('$usertxt', NOW());";
+        $results = mysqli_query($con, $query) or die(mysqli_error($con));
+        $orderid = mysqli_insert_id($con);
+        $message1 = "Order added to Order table.";
+
+        for($i = 0; $i < count($productid); $i++){
+            $query = "INSERT INTO orderdetails (orderid, prodid, qty, unitprice)
+                      VALUES ($orderid, '$productid[$i]', $quantity[$i], $price[$i]);";
+            $results = mysqli_query($con, $query) or die(mysqli_error($con));
+            $query = "UPDATE inventory SET QtyOnHand = ";
+            $query .= "(QtyOnHand - $quantity[$i]) WHERE prodid = '$productid[$i]'";
+            $results = mysqli_query($con, $query) or die(mysqli_error($con));            
+            $message2 = "Inventory Quantities Updated.";
+        }
+    }
 ?>
 <html>
 <head>
@@ -54,21 +58,15 @@
         <th>Product No.</th>
         <th>Qty</th>
     </tr>
-    <tr bgcolor="#EDF7EC">
-        <td><?php echo $usertxt; ?></td>
-        <td><?php echo $product1; ?></td>
-        <td><?php echo $q1; ?></td>
-    </tr>
-    <tr bgcolor="#E0F2DC">
-        <td><?php echo $usertxt; ?></td>
-        <td><?php echo $product2; ?></td>
-        <td><?php echo $q2; ?></td>
-    </tr>
-    <tr bgcolor="#EDF7EC">
-        <td><?php echo $usertxt; ?></td>
-        <td><?php echo $product3; ?></td>
-        <td><?php echo $q3; ?></td>
-    </tr>
+    <?php
+        for($i = 0; $i < count($productid); $i++){
+            echo "<tr bgcolor='".($i % 2 == 0 ? "#EDF7EC" : "E0F2DC")."'>";
+            echo "<td>$usertxt</td>";
+            echo "<td>$productid[$i]</td>";
+            echo "<td>$quantity[$i]</td>";
+            echo "</tr>";
+        }
+    ?>
     </table>
     </center>
     <hr />
