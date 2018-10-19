@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    if(!isset($_SESSION))
+        session_start();
     ob_start();
     //connect to the database
     include "conn_inc.php";
@@ -43,15 +44,15 @@
                                 echo "<tr bgcolor=\"#E0F2DC\">\n";
                             echo "<td width=\"25%\" align=\"center\"><img src='";
                             echo $prodid .".jpg' width='59' height='75'>\n";
-                            echo "<input type='hidden' name='productid"
-                                .$numbr. "' value=" .$prodid ." /></td>\n";
+                            echo "<input type='hidden' name='productid[]' value='" .$prodid ."' /></td>\n";
+                            echo "<input type='hidden' name='productdesc[]' value='" .$proddesc ."' /></td>\n";
+                            echo "<input type='hidden' name='price[]' value='" .$price ."' /></td>\n";
                             echo "<td width=\"25%\" align=\"center\">";
                             echo $proddesc;
                             echo "</td>\n<td width=\"25%\" align=\"center\">$";
                             echo $price;
                             echo "</td>\n<td width=\"25%\" align=\"center\">";
-                            echo "<input type='text'' name='qty"
-                                .$numbr ."' size='5' style='text-align:right' />";
+                            echo "<input type='number' min='0' name='qty[]' size='5' value='0' style='text-align:right' />";
                             echo "</td>\n</tr>\n";
                             $numbr += 1;
                         }
