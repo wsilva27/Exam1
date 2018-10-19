@@ -1,4 +1,6 @@
 <?php
+    if(!isset($_SESSION))
+        session_start();
     // Welbert Marques Silva
     // Web Programming - PHP
     // Fall 2018
