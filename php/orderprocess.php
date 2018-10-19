@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    if(!isset($_SESSION))
+        session_start();
     ob_start();
     include "conn_inc.php";
 
@@ -8,15 +9,12 @@
     // Fall 2018
     // Practical Test 1     
 
-    $prod1 = $_POST["productid1"];
-    $prod2 = $_POST["productid2"];
-    $prod3 = $_POST["productid3"];
-
+    $productid = $_POST["productid"];
+    $productdesc = $_POST["productdesc"];
+    $price = $_POST["price"];
+    $quantity = $_POST["qty"];
+    
     $username = $_SESSION['user_logged'];
-
-    $quantity1 = $_POST["qty1"];
-    $quantity2 = $_POST["qty2"];
-    $quantity3 = $_POST["qty3"];
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -43,40 +41,24 @@
                         <th>Unit<br />Price</th>
                         <th>Quantity</th>  
                     </tr>
-                    <tr> 
-                        <td align="center">
-                            <img src="<?php echo $prod1; ?>.jpg" width="59" height="75">
-                        </td>
-                        <td align="center">Yellow Scarf</td>
-                        <td align="center">$15.00</td>
-                        <td align="center">
-                            <?php echo $quantity1; ?>
-                            <input type="hidden" name="productid1" value="0001" />
-                            <input type="hidden" name="quantity1" value="<?php echo $quantity1; ?>"/>
-                        </td>
-                    </tr>
-                    <tr> 
-                        <td align="center">
-                            <img src="<?php echo $prod2; ?>.jpg" width="83" height="125"></td>
-                        <td align="center">Green Gloves</td>
-                        <td align="center">$20.00</td>
-                        <td align="center">
-                            <?php echo $quantity2; ?> 
-                            <input type="hidden" name="productid2" value="0002" />
-                            <input type="hidden" name="quantity2" value="<?php echo $quantity2; ?>"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <img src="<?php echo $prod3; ?>.jpg" width="88" height="88"></td>     
-                        <td align="center">Red Skirt</td>   
-                        <td align="center">$25.00</td>      
-                        <td align="center">
-                            <?php echo $quantity3; ?>      
-                            <input type="hidden" name="productid3" value="0003" />    
-                            <input type="hidden" name="quantity3" value="<?php echo $quantity3; ?>"/>  
-                        </td> 
-                    </tr>
+                    <?php
+                        for($i = 0; $i < count($productid); $i++){
+                            if($quantity[$i] > 0){
+                                echo "<tr>";
+                                echo "<td align='center'>";
+                                echo "<img src='{$productid[$i]}.jpg' width='59' height='75'>";
+                                echo "</td>";
+                                echo "<td align='center'>{$productdesc[$i]}</td>";
+                                echo "<td align='center'>{$price[$i]}</td>";
+                                echo "<td align='center'>{$quantity[$i]}";
+                                echo "<input type='hidden' name='productid[]' value='{$productid[$i]}' />";
+                                echo "<input type='hidden' name='price[]' value='{$price[$i]}'/>";
+                                echo "<input type='hidden' name='quantity[]' value='{$quantity[$i]}'/>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        }
+                    ?>
                     <tr>
                         <td colspan="4" align="center">
                             <input type="submit" value="Confirm Order">
@@ -88,4 +70,5 @@
         </table>
     </div> 
 </body>
-</html>   
+</html>          
+ 
