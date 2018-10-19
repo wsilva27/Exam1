@@ -1,11 +1,16 @@
 <?php
-    session_start();
+    if(!isset($_SESSION))
+        session_start();
     ob_start();
     //connect to the database
     include "conn_inc.php";
-    $query = "SELECT * FROM ordertbl";
-    $results = mysqli_query($con, $query)
-        or die(mysqli_error($con));
+    $query = "SELECT 
+                o.orderid, o.username, o.orderdate, count(d.prodid) as numberofproduct, 
+                sum(d.qty) as totalqty, sum(d.qty * d.unitprice) as totalprice
+              FROM orders o, orderdetails d
+              WHERE o.orderid = d.orderid
+              GROUP BY orderid, username, orderdate";
+    $results = mysqli_query($con, $query) or die(mysqli_error($con));
     echo "<html>";
     echo "<head>";
     echo "<title>The PHP Store</title>";
@@ -13,13 +18,14 @@
     echo "<body>";
     echo "<h2>PHP Store Orders</h2>";
     $tbl_head =<<<TBL
-<table width="500" align="center" border="1">
+<table width="900" align="center" border="1">
     <tr>
-        <th width="20%">Order Number</th>
+        <th width="12%">Order<br />Number</th>
         <th width="20%">Placed<br />By</th>
-        <th width="20%">Quantity 1</th>
-        <th width="20%">Quantity 2</th>
-        <th width="20%">Quantity 3</th>
+        <th width="12%">Number<br />of Product</th>
+        <th width="15%">Total Qtys</th>
+        <th width="20%">Total Price</th>
+        <th width="21%">Order Date</th>
     </tr>
 TBL;
     echo $tbl_head;
@@ -30,16 +36,19 @@ TBL;
             echo "<tr bgcolor=\"#EDF7EC\">";
         else
             echo "<tr bgcolor=\"#E0F2DC\">";
-        echo "<td width=\"20%\" align=\"center\">";
-        echo $ordernum;
+        echo "<td width=\"12%\" align=\"center\">";
+        echo $orderid;
         echo "</td><td width=\"20%\" align=\"center\">";
         echo $username;
+        echo "</td><td width=\"12%\" align=\"center\">";
+        echo $numberofproduct;
+        echo "</td><td width=\"15%\" align=\"center\">";
+        echo $totalqty;
         echo "</td><td width=\"20%\" align=\"center\">";
-        echo $qty1;
-        echo "</td><td width=\"20%\" align=\"center\">";
-        echo $qty2;
-        echo "</td><td width=\"20%\" align=\"center\">";
-        echo $qty3;
+        echo $totalprice;
+        echo "</td>";
+        echo "</td><td width=\"21%\" align=\"center\">";
+        echo $orderdate;
         echo "</td></tr>";
         $numbr += 1;
     }
