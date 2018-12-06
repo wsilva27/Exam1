@@ -33,8 +33,12 @@ CREATE TABLE Team (
 						REFERENCES Field_home(FIELD_ID)
 )ENGINE=InnoDB;
 
+
+-- I think unique key constraint combine JERSEY_NUMBER and TEAM_ID more better. like UNIQUE(TEAM_ID, JERSEY_NUMBER)
+-- Because each team may has same jersey number. only the team doesn't allow same jersey number.
+-- And need to create one table for Player_poistion and change type varchar to int and create another foreign key for player_position.
 CREATE TABLE Player (
-	PLAYER_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   PLAYER_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    PLAYER_NAME VARCHAR (40) NOT NULL,
    PHONE_NUMBER VARCHAR(12) UNIQUE KEY,
    PLAYER_DOB DATE NOT NULL,
@@ -46,6 +50,9 @@ CREATE TABLE Player (
 						REFERENCES Team(TEAM_ID)
 )ENGINE= InnoDB;
 
+-- I think TEAM_PLAYER table deosn't need for one season.
+-- If we need this table, some of field (JERSEY_NUMBER, PLAYER_POSITION, IS_PLAYER_CAPTAIN) on Player table should be moved to here.
+-- And TEAM_ID on Player table doesn't need.
 -- MANY TO MANY
 CREATE TABLE TEAM_PLAYER (
 	PLAYER_ID INT,
@@ -72,6 +79,9 @@ CREATE TABLE Matches (
 						REFERENCES Team(TEAM_ID)
 )ENGINE=InnoDB;
 
+
+-- we need to change date type of GOAL_TIME from TIME to INT
+-- we don't need TEAM_ID_1 and TEAM_ID_2, because MATCH_ID already has.
 CREATE TABLE Score (
 	SCORE_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	GOAL_TIME TIME NOT NULL,
@@ -85,6 +95,9 @@ CREATE TABLE Score (
 	FOREIGN KEY (MATCH_ID)
 						REFERENCES Matches (MATCH_ID)
 )ENGINE = InnoDB;
+
+-- And please create each stored procedure for insert
+-- and hold to create each stored procedure for select, I'll check for...
 
 /** SEASON **/
 INSERT INTO Season(SEASON_NAME) VALUES ('MLS Youth 18/19');
