@@ -37,6 +37,8 @@ CREATE TABLE Team (
 -- I think unique key constraint combine JERSEY_NUMBER and TEAM_ID more better. like UNIQUE(TEAM_ID, JERSEY_NUMBER)
 -- Because each team may has same jersey number. only the team doesn't allow same jersey number.
 -- And need to create one table for Player_poistion and change type varchar to int and create another foreign key for player_position.
+-- And type of IS_PLAYER_CAPTAIN field change varchar to bit and allow null, also create unique constraint (TEAM_ID, IS_PLAEYR_CAPTAIN),
+-- we just use null and 1 (not use 0)
 CREATE TABLE Player (
    PLAYER_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    PLAYER_NAME VARCHAR (40) NOT NULL,
