@@ -63,6 +63,8 @@ CREATE TABLE Player (
 						REFERENCES Team(TEAM_ID),
 	FOREIGN KEY (PLAYER_POSITION_ID)
 						REFERENCES Player_Position(PLAYER_POSITION_ID)
+-- UNIQUE(TEAM_ID, JERSEY_NUMBER) <= It's allow same number different team. Because usually jersey number is using 1 to 23.
+-- such as no 1 = goal kipper, no 7 right winger, etc...
 )ENGINE= InnoDB;
 
 -- DONE ****  I think TEAM_PLAYER table deosn't need for one season.
@@ -70,6 +72,8 @@ CREATE TABLE Player (
 
 -- ??? And TEAM_ID on Player table doesn't need. (The explanation of why we need to have TEAM_ID into Player's table it is above. Again, I might dont understand you what you meant
 -- if you can explain to me, we can modify.
+
+-- => now, we need to TEAM_ID on Player table, if we keep team_player table, we don't need.
 
 CREATE TABLE Matches (
 	MATCH_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -89,6 +93,8 @@ CREATE TABLE Matches (
 -- DONE **** we need to change date type of GOAL_TIME from TIME to INT
 -- ??? we don't need TEAM_ID_1 and TEAM_ID_2, because MATCH_ID already has. (I understand what you mean. But the professor said that we need to keep which team scored the goal, so that's why I did that.
 -- but we can do in different way adding one colum for example WHO_SCORED as VARCHAR and put the name of the team who scored. what do you think ?
+--> forget above. 
+
 CREATE TABLE Score (
 	SCORE_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	GOAL_TIME INT NOT NULL,
