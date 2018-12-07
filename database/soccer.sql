@@ -619,3 +619,96 @@ INSERT INTO Score (GOAL_TIME, MATCH_ID, TEAM_ID_2) VALUES (63, 87, 6); ## 10 vs 
 INSERT INTO Score (GOAL_TIME, MATCH_ID, TEAM_ID_1) VALUES (85, 88, 10); ## 10 vs 7 ##
 INSERT INTO Score (GOAL_TIME, MATCH_ID, TEAM_ID_2) VALUES (77, 89, 8); ## 10 vs 8 ##
 INSERT INTO Score (GOAL_TIME, MATCH_ID, TEAM_ID_1) VALUES (71, 90, 10); ## 10 vs 9 ##
+
+
+
+-- example --
+
+CREATE TABLE Team (
+	TEAM_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	TEAM_NAME VARCHAR(40) NOT NULL UNIQUE KEY
+);
+
+CREATE TABLE Player (
+	PLAYER_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	PLAYER_NAME VARCHAR (40) NOT NULL,
+    TEAM_ID INT
+);
+
+CREATE TABLE Matches (
+	MATCH_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	TEAM_ID_1 INT NOT NULL,
+	TEAM_ID_2 INT NOT NULL
+);
+
+CREATE TABLE Score (
+SCORE_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+PLAYER_ID INT NOT NULL,
+GOAL_TIME INT NOT NULL,
+MATCH_ID INT NOT NULL
+);
+
+insert into team (team_name) values ('team a'), ('team b'), ('team c'), ('team d');
+insert into player (player_name, team_id) values 
+('player 1', 1),('player 2', 1),('player 3', 1),('player 4', 1),('player 5', 1),
+('player 6', 2),('player 7', 2),('player 8', 2),('player 9', 2),('player 10', 2),
+('player 11', 3),('player 12', 3),('player 13', 3),('player 14', 3),('player 15', 3),
+('player 16', 4),('player 17', 4),('player 18', 4),('player 19', 4),('player 20', 4);
+insert into matches (team_id_1, team_id_2) values 
+(1, 2), (3, 4), (1, 3), (2, 4);
+insert into score (player_id, goal_time, match_id) values
+(1, 14, 1), (11, 25, 2), (16, 26, 2), (13, 45, 2);
+
+
+select 
+	res3.match_id, sum(team1) as team1_score, sum(team2) as team2_score
+from (
+	select 
+		m.match_id, ifnull(res1.score, 0) as team1, null as team2
+	from 
+		matches m
+	left join (
+		select 
+			s.match_id, t.team_id, count(t.team_id) as score
+		from
+			score s
+		inner join
+			player p
+		on
+			s.player_id = p.player_id
+		inner join
+			team t
+		on
+			p.team_id = t.team_id
+		group by
+			s.match_id, t.team_id
+	) res1
+	on 
+		m.match_id = res1.match_id and m.team_id_1 = res1.team_id
+	union
+	select 
+		m.match_id, null as team1, ifnull(res2.score, 0) as team2
+	from 
+		matches m
+	left join (
+		select 
+			s.match_id, t.team_id, count(t.team_id) as score
+		from
+			score s
+		inner join
+			player p
+		on
+			s.player_id = p.player_id
+		inner join
+			team t
+		on
+			p.team_id = t.team_id
+		group by
+			s.match_id, t.team_id
+	) res2
+	on 
+		m.match_id = res2.match_id and m.team_id_2 = res2.team_id
+) res3
+group by 
+	res3.match_id
+
