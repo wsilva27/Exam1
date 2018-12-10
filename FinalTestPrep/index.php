@@ -30,7 +30,7 @@
         </table>
 
         <ul>
-            <li><a href="filter_by_borough.php">Filter by Borough</a></li>
+            <li><a href="getbyteam.php">Filter by Team</a></li>
             <li><a href="filter_by_grade.php">Filter by Grade</a></li>
             <li><a href="filter_by_zipcode.php">Filter by Zip Code</a></li>
         </ul>
