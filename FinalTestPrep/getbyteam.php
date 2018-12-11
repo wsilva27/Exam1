@@ -33,5 +33,8 @@ include("config.php");
             window.location = "resultbyteam.php?TEAM_NAME="+team;
         }
         </script>
+        <ul>
+            <li><a href="index.php">Back to main Page</a></li>
+        </ul>
     </body>
 </html>
