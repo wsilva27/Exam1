@@ -1,0 +1,44 @@
+-- get a first team id and store variable
+SELECT
+	TEAM_ID INTO @TEAM1
+FROM
+	TEAM
+ORDER BY 
+	TEAM_NAME ASC
+LIMIT 1;
+
+-- get a third team id and store variable
+SELECT
+	TEAM_ID INTO @TEAM2
+FROM
+	TEAM
+ORDER BY
+	TEAM_NAME ASC
+LIMIT 1 OFFSET 2;
+
+-- find matches with variables, and get last game and last goal time 
+-- There are two matches between the two teams.
+SELECT
+	T.TEAM_NAME, P.PLAYER_NAME, S.GOAL_TIME
+FROM
+	MATCHES M 
+INNER JOIN
+	SCORE S
+ON
+	M.MATCH_ID = S.MATCH_ID
+INNER JOIN
+	PLAYER P
+ON
+	S.PLAYER_ID = P.PLAYER_ID
+INNER JOIN
+	TEAM T
+ON
+	P.TEAM_ID = T.TEAM_ID
+WHERE
+	M.TEAM_ID_1 IN (@TEAM1) AND M.TEAM_ID_2 IN (@TEAM2) OR
+	M.TEAM_ID_1 IN (@TEAM2) AND M.TEAM_ID_2 IN (@TEAM1)
+ORDER BY
+	M.MATCH_DATE DESC, S.GOAL_TIME DESC
+LIMIT 1;
+
+
