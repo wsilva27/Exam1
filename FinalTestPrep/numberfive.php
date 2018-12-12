@@ -23,13 +23,12 @@ include("config.php");
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT T1.TEAM_NAME, T2.PLAYER_NAME, T2.JERSEY_NUMBER, T4.MATCH_DATE, MIN(T3.GOAL_TIME) AS GOAL_TIME
+    $stmt = $conn->prepare("SELECT T1.TEAM_NAME, T2.PLAYER_NAME, T2.JERSEY_NUMBER, T4.MATCH_DATE, T3.GOAL_TIME
                             FROM TEAM AS T1
                                 INNER JOIN PLAYER AS T2 ON T1.TEAM_ID = T2.TEAM_ID
                                 INNER JOIN SCORE AS T3 ON T2.PLAYER_ID = T3.PLAYER_ID
                                 INNER JOIN MATCHES AS T4 ON T3.MATCH_ID = T4.MATCH_ID
                             WHERE T2.IS_PLAYER_CAPTAIN IS NOT NULL
-                            GROUP BY T3.MATCH_ID
                             ORDER BY T3.MATCH_ID;"); 
     $stmt->execute();
 
