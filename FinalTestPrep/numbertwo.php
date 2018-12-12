@@ -23,7 +23,9 @@ include("config.php");
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = 'SELECT TEAM_ID INTO @TEAM1
+    /* $sql = 'SELECT TEAM_ID INTO @TEAM1
+       this is variable, "INTO @TEAM1" doesnot need but if we will create procedure, it should be needed */
+    $sql = 'SELECT TEAM_ID
     FROM TEAM
     ORDER BY TEAM_NAME
     LIMIT 1;';
@@ -31,11 +33,15 @@ try {
     extract($stmt->fetch(PDO::FETCH_ASSOC));
     $team1 = $TEAM_ID;
 
-    $sql = 'SELECT TEAM_ID INTO @TEAM2
+    /* $sql = 'SELECT TEAM_ID INTO @TEAM2
+       this is sql variable, "INTO @TEAM2" doesnot need but if we will create procedure, it should be needed */
+    $sql = 'SELECT TEAM_ID
     FROM TEAM
     ORDER BY TEAM_NAME
     LIMIT 1 OFFSET 2;';
-    $stmt = $conn->prepare($sql);
+    /* $stmt = $conn->prepare($sql);
+       need to change prepare to query, becuase it is not used parameter. */
+    $stmt = $conn->query($sql);
     extract($stmt->fetch(PDO::FETCH_ASSOC));
     $team2 = $TEAM_ID;
 
