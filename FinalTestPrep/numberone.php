@@ -1,53 +1,46 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
+<?php
+echo "<table style='border: solid 1px black;'>";
+echo "<tr><th>Team Name</th><th>Goals</th></tr>";
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <title>Team</title>
-    </head>
-    <body>
-        <div id="container">
-            <?php
-            $teamin = htmlspecialchars($_GET["TEAM_NAME"]);
-            require_once 'config.php';
-            
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            $result = mysqli_query($conn,"call GetByTeamName('".$teamin."')");
-            $rowcount=mysqli_num_rows($result);
-            
-            echo "<h3>United States Soccer Reports: Filter by Team " . $teamin . " (".$rowcount .")</h3>";
-            
-            echo "<table class='table table-bordered table-condensed'>";
-            echo "    <thead>";
-            echo "        <tr>";
-            echo "            <th>Name</th>";
-            echo "            <th>Phone</th>";
-            echo "            <th>Data of Birth</th>";
-            echo "            <th>Jersey Number</th>";
-            echo "            <th>Current Position</th>";
-            echo "            <th>Current Team</th>";
-            echo "        </tr>";
-            echo "    </thead>";
-            echo "    <body>";
-            while ($row = mysqli_fetch_array($result)){
-                echo "<tr>";
-                echo "<td>".htmlspecialchars($row['Name'])."</td>";
-                echo "<td>".htmlspecialchars($row['Phone'])."</td>";
-                echo "<td>".htmlspecialchars($row['DOB'])."</td>";
-                echo "<td>".htmlspecialchars($row['Jersey_Number'])."</td>";
-                echo "<td>".htmlspecialchars($row['Current_position'])."</td>";
-                echo "<td>".htmlspecialchars($row['Current_Team'])."</td>";
-                echo "</tr>";
-            }
-            echo "    </body>";
-            echo "</table>";
-            ?>
-                
-        </div>
-            <ul>
-                <li><a href="getbyteam.php">Select another Team</a></li>
-            </ul>
-    </body>
-</html>
+class TableRows extends RecursiveIteratorIterator { 
+    function __construct($it) { 
+        parent::__construct($it, self::LEAVES_ONLY); 
+    }
+
+    function current() {
+        return "<td style='width:150px;border:1px solid black;'>" . parent::current(). "</td>";
+    }
+
+    function beginChildren() { 
+        echo "<tr>"; 
+    } 
+
+    function endChildren() { 
+        echo "</tr>" . "\n";
+    } 
+} 
+include("config.php");
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt = $conn->prepare("SELECT T3.TEAM_NAME, COUNT(T1.PLAYER_ID) AS GOALS
+                            FROM PLAYER AS T1
+                                INNER JOIN SCORE AS T2 ON T1.PLAYER_ID=T2.PLAYER_ID
+                                LEFT JOIN TEAM AS T3 ON T1.TEAM_ID=T3.TEAM_ID
+                            GROUP BY T3.TEAM_NAME
+                            ORDER BY T3.TEAM_NAME;"); 
+    $stmt->execute();
+
+    // set the resulting array to associative
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
+    foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) { 
+        echo $v;
+    }
+}
+catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
+$conn = null;
+echo "</table>";
+echo "<a href='index.php'>Back to Main Menu</a>"
+?>
