@@ -1,5 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST2</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <h3>United States Soccer Reports</h3>
+        <br>
 <?php
-echo "<table style='border: solid 1px black;'>";
+echo "<table border='1' class='table table-striped'>";
 echo "<tr><th>Team Name</th><th>Player Name</th><th>Jersey Number</th><th>Match Date</th><th>Goal Time</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator { 
@@ -46,3 +59,5 @@ $conn = null;
 echo "</table>";
 echo "<a href='index.php'>Back to Main Menu</a>";
 ?>
+</body>
+</html>

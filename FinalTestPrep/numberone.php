@@ -1,5 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST2</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <h3>United States Soccer Reports</h3>
+        <br>
 <?php
-echo "<table style='border: solid 1px black;'>";
+echo "<table border='1' class='table table-striped'>";
 echo "<tr><th>Team Name</th><th>Goals</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator { 
@@ -8,7 +21,7 @@ class TableRows extends RecursiveIteratorIterator {
     }
 
     function current() {
-        return "<td style='width:150px;border:1px solid black;'>" . parent::current(). "</td>";
+        return "<td>" . parent::current(). "</td>";
     }
 
     function beginChildren() { 
@@ -26,7 +39,7 @@ try {
     $stmt = $conn->prepare("SELECT T3.TEAM_NAME, COUNT(T1.PLAYER_ID) AS GOALS
                             FROM PLAYER AS T1
                                 INNER JOIN SCORE AS T2 ON T1.PLAYER_ID=T2.PLAYER_ID
-                                RIGHT JOIN TEAM AS T3 ON T1.TEAM_ID=T3.TEAM_ID
+                                LEFT JOIN TEAM AS T3 ON T1.TEAM_ID=T3.TEAM_ID
                             GROUP BY T3.TEAM_NAME
                             ORDER BY T3.TEAM_NAME;"); 
     $stmt->execute();
@@ -44,3 +57,5 @@ $conn = null;
 echo "</table>";
 echo "<a href='index.php'>Back to Main Menu</a>";
 ?>
+</body>
+</html>
