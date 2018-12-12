@@ -42,7 +42,7 @@ try {
                                 INNER JOIN SCORE AS T3 ON T2.PLAYER_ID = T3.PLAYER_ID
                                 INNER JOIN MATCHES AS T4 ON T3.MATCH_ID = T4.MATCH_ID
                             GROUP BY T3.MATCH_ID
-                            ORDER BY T3.MATCH_ID;"); 
+                            ORDER BY T3.MATCH_ID;"); /* <- this query */
     $stmt->execute();
 
     // set the resulting array to associative
