@@ -58,13 +58,23 @@
 
             $sql = 'SELECT
                         M.MATCH_ID, T.TEAM_NAME, P.PLAYER_NAME, P.JERSEY_NUMBER, 
-                        DATE_FORMAT(M.MATCH_DATE, "%m/%d/%Y") AS MATCH_DATE, MIN(S.GOAL_TIME) AS GOAL_TIME
-                    FROM
-                        SCORE S
+                        DATE_FORMAT(M.MATCH_DATE, "%m/%d/%Y") AS MATCH_DATE, S2.GOAL_TIME
+                    FROM(
+                        SELECT
+                            MATCH_ID, MIN(GOAL_TIME) AS GOAL_TIME
+                        FROM
+                            SCORE
+                        GROUP BY
+                            MATCH_ID
+                    ) S1
+                    INNER JOIN
+                        SCORE S2
+                    ON
+                        S1.MATCH_ID = S2.MATCH_ID AND S1.GOAL_TIME = S2.GOAL_TIME
                     INNER JOIN
                         PLAYER P
                     ON
-                        S.PLAYER_ID = P.PLAYER_ID
+                        S2.PLAYER_ID = P.PLAYER_ID
                     INNER JOIN
                         TEAM T
                     ON
@@ -72,11 +82,9 @@
                     INNER JOIN
                         MATCHES M
                     ON
-                        S.MATCH_ID = M.MATCH_ID
-                    GROUP BY
-                        S.MATCH_ID
+                        S2.MATCH_ID = M.MATCH_ID
                     ORDER BY
-                        T.TEAM_NAME ASC';
+                        M.MATCH_ID ASC';
             $stmt = $con->query($sql);
             if($stmt->rowCount() > 0){
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
