@@ -43,10 +43,5 @@ catch(PDOException $e) {
 }
 $conn = null;
 echo "</table>";
-<<<<<<< HEAD
 echo "<a href='index.php'>Back to Main Menu</a>";
 ?>
-=======
-echo "<a href='index.php'>Back to Main Menu</a>"
-?>
->>>>>>> df1dcccedb3a2693e225594bd7412e4c8ccd3ec4
