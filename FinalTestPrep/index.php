@@ -31,10 +31,10 @@
         <h1>Main Menu</h1>
         <ul>
             <li><a href="numberone.php">1 - Get Teams report</a></li>
-            <li><a href="numbertwo.php">2 - </a></li>
+            <li><a href="numbertwo.php">2 - Get Player who scored the last goal for the first team against third</a></li>
             <li><a href="numberthree.php">3 - Get Goals Scored on the Second Half</a></li>
-            <li><a href="numberfour.php">4 - </a></li>
-            <li><a href="numberfive.php">5 - </a></li>
+            <li><a href="numberfour.php">4 - Get Players who scored first goal on each match</a></li>
+            <li><a href="numberfive.php">5 - Get Captain Players who scored first goal on each match</a></li>
         </ul>
     </body>
 </html>
