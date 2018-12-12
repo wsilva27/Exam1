@@ -57,7 +57,7 @@
             require_once 'database.php';
 
             $sql = 'SELECT
-                        M.MATCH_ID, T.TEAM_NAME, P.PLAYER_NAME, P.JERSEY_NUMBER, M.MATCH_DATE, MIN(S.GOAL_TIME) AS GOAL_TIME
+                        M.MATCH_ID, T.TEAM_NAME, P.PLAYER_NAME, P.JERSEY_NUMBER, M.MATCH_DATE, S.GOAL_TIME
                     FROM
                         SCORE S
                     INNER JOIN
@@ -72,8 +72,6 @@
                         MATCHES M
                     ON
                         S.MATCH_ID = M.MATCH_ID
-                    GROUP BY
-                        S.MATCH_ID
                     ORDER BY
                         T.TEAM_NAME ASC';
             $stmt = $con->query($sql);

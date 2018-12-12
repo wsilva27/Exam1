@@ -26,7 +26,8 @@ try {
     $stmt = $conn->prepare("SELECT T3.TEAM_NAME, COUNT(T1.PLAYER_ID) AS GOALS
                             FROM PLAYER AS T1
                                 INNER JOIN SCORE AS T2 ON T1.PLAYER_ID=T2.PLAYER_ID
-                                LEFT JOIN TEAM AS T3 ON T1.TEAM_ID=T3.TEAM_ID
+/*                                LEFT JOIN TEAM AS T3 ON T1.TEAM_ID=T3.TEAM_ID */
+                                RIGHT JOIN TEAM AS T3 ON T1.TEAM_ID=T3.TEAM_ID
                             GROUP BY T3.TEAM_NAME
                             ORDER BY T3.TEAM_NAME;"); 
     $stmt->execute();
@@ -42,5 +43,10 @@ catch(PDOException $e) {
 }
 $conn = null;
 echo "</table>";
+<<<<<<< HEAD
 echo "<a href='index.php'>Back to Main Menu</a>";
 ?>
+=======
+echo "<a href='index.php'>Back to Main Menu</a>"
+?>
+>>>>>>> df1dcccedb3a2693e225594bd7412e4c8ccd3ec4
