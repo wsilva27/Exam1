@@ -47,7 +47,6 @@ try {
     
     $q = $conn->prepare($sql);
     $q->execute();
-    //$q->setFetchMode(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     die("Error occurred:" . $e->getMessage());
