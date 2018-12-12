@@ -23,19 +23,19 @@ include("config.php");
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = 'SELECT TEAM_ID INTO @TEAM1
+    $sql = 'SELECT TEAM_ID
     FROM TEAM
     ORDER BY TEAM_NAME
     LIMIT 1;';
     $stmt = $conn->query($sql);
     extract($stmt->fetch(PDO::FETCH_ASSOC));
     $team1 = $TEAM_ID;
-
-    $sql = 'SELECT TEAM_ID INTO @TEAM2
+    
+    $sql = 'SELECT TEAM_ID
     FROM TEAM
     ORDER BY TEAM_NAME
     LIMIT 1 OFFSET 2;';
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->query($sql);
     extract($stmt->fetch(PDO::FETCH_ASSOC));
     $team2 = $TEAM_ID;
 
@@ -63,5 +63,5 @@ catch(PDOException $e) {
 }
 $conn = null;
 echo "</table>";
-echo "<a href='index.php'>Back to Main Menu</a>"
+echo "<a href='index.php'>Back to Main Menu</a>";
 ?>
