@@ -24,7 +24,7 @@
         <table border="1" class="table table-striped">
         <div class="jumbotron text-center">
         <h1>United States Soccer Reports</h1>
-        <p>Names: Welbert | Fatima | Ted</p> 
+        <p>Name: Welbert Marques Silva</p> 
         </div>
         <h1>Main Menu</h1>
         <ul>

@@ -46,8 +46,7 @@ try {
                             GROUP BY T3.MATCH_ID
                             ORDER BY T3.MATCH_ID;"); 
     $stmt->execute();
-
-    // set the resulting array to associative
+    
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
     foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) { 
         echo $v;
