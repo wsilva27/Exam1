@@ -47,11 +47,16 @@ try {
     
     $q = $conn->prepare($sql);
     $q->execute();
+    //$q->setFetchMode(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     die("Error occurred:" . $e->getMessage());
 }
 ?>
+<div class="alert alert-info">
+  <strong>Question 2:</strong> Result of the plaer who scored the last goal for first team against third team.
+</div>
+
 <table border="1" class="table table-striped">
     <tr>
         <th>Team Name</th>
@@ -66,6 +71,6 @@ try {
         </tr>
     <?php endwhile; ?>
 </table>
-    <ul><li><a href="index.php">Back to the main menu</a></li></ul>
+    <a href="index.php" class="btn btn-info" role="button">Main Menu</a>
 </body>
 </html>

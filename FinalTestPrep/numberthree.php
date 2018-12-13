@@ -12,6 +12,8 @@
         <h3>United States Soccer Reports</h3>
         <br>
 <?php
+echo "<div class='alert alert-info'>";
+echo "<strong>Question 3: </strong> Result of all goals that were scored on the second half.</div>";
 echo "<table border='1' class='table table-striped'>";
 echo "<tr><th>Team Name</th><th>Player Name</th><th>Goal Time</th></tr>";
 
@@ -44,6 +46,7 @@ try {
                             ORDER BY T3.TEAM_ID, T1.GOAL_TIME;"); 
     $stmt->execute();
 
+    // set the resulting array to associative
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
     foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) { 
         echo $v;
@@ -54,7 +57,7 @@ catch(PDOException $e) {
 }
 $conn = null;
 echo "</table>";
-echo "<a href='index.php'>Back to Main Menu</a>";
+echo "<a href='index.php' class='btn btn-info' role='button'>Main Menu</a>";
 ?>
 </body>
 </html>

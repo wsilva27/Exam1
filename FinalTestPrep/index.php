@@ -9,7 +9,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h3>United States Soccer Reports</h3>
         <br>
 <?php
         include("config.php");
@@ -23,7 +22,26 @@
         }
         ?>
         <table border="1" class="table table-striped">
-            <tr>
+        <div class="jumbotron text-center">
+        <h1>United States Soccer Reports</h1>
+        <p>Names: Welbert | Fatima | Ted</p> 
+        </div>
+        <h1>Main Menu</h1>
+        <ul>
+            <div class="btn-group-vertical">
+                <a href="numberone.php" class="btn btn-primary">Question 1</a>
+                <br>
+                <a href="numbertwo.php" class="btn btn-primary">Question 2</a>
+                <br>
+                <a href="numberthree.php" class="btn btn-primary">Question 3</a>
+                <br>
+                <a href="numberfour.php" class="btn btn-primary">Question 4</a>
+                <br>
+                <a href="numberfive.php" class="btn btn-primary">Question 5</a>
+            </div>
+        </ul>
+        <br>
+        <tr>
                 <th>Number of the teams that are playing the league</th>
             </tr>
             <?php while ($r = $q->fetch()): ?>
@@ -32,13 +50,5 @@
                 </tr>
             <?php endwhile; ?>
         </table>
-        <h1>Main Menu</h1>
-        <ul>
-            <li><a href="numberone.php">1 - Get Teams report</a></li>
-            <li><a href="numbertwo.php">2 - Get Player who scored the last goal for the first team against third</a></li>
-            <li><a href="numberthree.php">3 - Get Goals Scored on the Second Half</a></li>
-            <li><a href="numberfour.php">4 - Get Players who scored first goal on each match</a></li>
-            <li><a href="numberfive.php">5 - Get Captain Players who scored first goal on each match</a></li>
-        </ul>
     </body>
 </html>

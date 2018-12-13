@@ -12,6 +12,8 @@
         <h3>United States Soccer Reports</h3>
         <br>
 <?php
+echo "<div class='alert alert-info'>";
+echo "<strong>Question 4: </strong> Player who scored the first goal on each match with his team.</div>";
 echo "<table border='1' class='table table-striped'>";
 echo "<tr><th>Team Name</th><th>Player Name</th><th>Jersey Number</th><th>Match Date</th><th>Goal Time</th></tr>";
 
@@ -42,9 +44,10 @@ try {
                                 INNER JOIN SCORE AS T3 ON T2.PLAYER_ID = T3.PLAYER_ID
                                 INNER JOIN MATCHES AS T4 ON T3.MATCH_ID = T4.MATCH_ID
                             GROUP BY T3.MATCH_ID
-                            ORDER BY T3.MATCH_ID;"); /* <- this query */
+                            ORDER BY T3.MATCH_ID;"); 
     $stmt->execute();
 
+    // set the resulting array to associative
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
     foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) { 
         echo $v;
@@ -55,7 +58,7 @@ catch(PDOException $e) {
 }
 $conn = null;
 echo "</table>";
-echo "<a href='index.php'>Back to Main Menu</a>";
+echo "<a href='index.php' class='btn btn-info' role='button'>Main Menu</a>";
 ?>
 </body>
 </html>
